@@ -74,7 +74,7 @@ const Navbar = () => {
               onClick={() => setOpenSearch((prev) => !prev)}
             />
             {openSearch && (
-              <div className="absolute flex justify-center left-0 top-full w-full px-6 pt-4 bg-white shadow-lg">
+              <div className="absolute z-10 flex justify-center left-0 top-full w-full px-6 pt-4 bg-white shadow-lg">
                 <div className="lg:min-w-2xl flex flex-col justify-center">
                   <div className="flex gap-3 justify-center items-center">
                     <Search size={20} />
