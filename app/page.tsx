@@ -1,13 +1,11 @@
-import { Navbar } from "@/components/layout";
-import { HomePage } from "@/modules/home";
+import { Home } from "@/modules/home";
 
-const page = () => {
+const HomePage = () => {
   return (
     <>
-      <Navbar />
-      <HomePage />
+      <Home />
     </>
   );
 };
 
-export default page;
+export default HomePage;

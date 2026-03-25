@@ -1,4 +1,4 @@
-const HomePage = () => {
+const Home = () => {
   return (
     <main>
       <div className="flex">
@@ -9,4 +9,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default Home;
