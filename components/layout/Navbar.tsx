@@ -2,7 +2,7 @@
 
 import { MENUS } from "@/lib/navigation";
 import logo from "@/public/navbar/LINEA-1.svg";
-import earing from "@/public/products/earing.jpg";
+import earring from "@/public/products/earring.jpg";
 import { Handbag, Heart, Search } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
@@ -39,7 +39,7 @@ type CartItemProps = {
 
 const cartItems: CartItemProps[] = [
   {
-    image: earing,
+    image: earring,
     title: "Earrings",
     brand: "Pantheon",
     price: 2850,
