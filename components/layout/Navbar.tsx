@@ -2,8 +2,9 @@
 
 import { MENUS } from "@/lib/navigation";
 import logo from "@/public/navbar/LINEA-1.svg";
+import earing from "@/public/products/earing.jpg";
 import { Handbag, Heart, Search } from "lucide-react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
 import {
   Badge,
@@ -16,6 +17,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "../ui";
+import CartItem from "./CartItem";
 import HoverMenu from "./HoverMenu";
 import MobileMenu from "./MobileMenu";
 
@@ -28,6 +30,21 @@ const popular_searches = [
   "Vintage Collection",
 ];
 
+type CartItemProps = {
+  image: StaticImageData;
+  title: string;
+  brand: string;
+  price: number;
+};
+
+const cartItems: CartItemProps[] = [
+  {
+    image: earing,
+    title: "Earrings",
+    brand: "Pantheon",
+    price: 2850,
+  },
+];
 const Navbar = () => {
   const [openSearch, setOpenSearch] = useState(false);
   const [openFavorite, setOpenFavorite] = useState(false);
@@ -112,7 +129,7 @@ const Navbar = () => {
                 <Separator />
                 <SheetDescription className="flex justify-center items-center">
                   <Button
-                  className="px-25 py-5 text-base"
+                    className="px-25 py-5 text-base"
                     size={"lg"}
                     variant={"outline"}
                     onClick={() => setOpenFavorite((prev) => !prev)}
@@ -121,8 +138,16 @@ const Navbar = () => {
                     View Favourites
                   </Button>
                 </SheetDescription>
-                <SheetDescription className="px-3">
-                  cart details
+                <SheetDescription asChild className="px-3">
+                  <div>
+                    {cartItems.length === 0 ? (
+                      <p className="text-sm text-gray-500 text-center py-6">
+                        Your cart is empty
+                      </p>
+                    ) : (
+                      cartItems.map((item, i) => <CartItem key={i} {...item} />)
+                    )}
+                  </div>
                 </SheetDescription>
               </SheetContent>
             </Sheet>
