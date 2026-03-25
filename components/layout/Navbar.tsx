@@ -127,9 +127,9 @@ const Navbar = () => {
                   <SheetTitle className="text-lg">Shopping Bag</SheetTitle>
                 </SheetHeader>
                 <Separator />
-                <SheetDescription className="flex justify-center items-center">
+                <div className="flex lg:hidden flex-col items-center gap-4">
                   <Button
-                    className="px-25 py-5 text-base"
+                    className="flex items-center text-base px-20"
                     size={"lg"}
                     variant={"outline"}
                     onClick={() => setOpenFavorite((prev) => !prev)}
@@ -137,7 +137,8 @@ const Navbar = () => {
                     <Heart />
                     View Favourites
                   </Button>
-                </SheetDescription>
+                  <Separator />
+                </div>
                 <SheetDescription asChild className="px-3">
                   <div>
                     {cartItems.length === 0 ? (
@@ -149,6 +150,7 @@ const Navbar = () => {
                     )}
                   </div>
                 </SheetDescription>
+                <Separator />
               </SheetContent>
             </Sheet>
           </div>

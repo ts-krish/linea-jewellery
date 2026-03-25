@@ -18,7 +18,13 @@ const CartItem = ({ image, title, brand, price }: CartItemProps) => {
   return (
     <div className="flex gap-4 py-4 border-b">
       <div className="relative w-20 h-20">
-        <Image src={image} alt={title} fill className="object-cover" />
+        <Image
+          src={image}
+          alt={title}
+          fill
+          sizes="(max-width: 768px) 100vw, 50vw"
+          className="object-cover"
+        />
       </div>
       <div className="flex-1 flex flex-col justify-between">
         <div className="flex justify-between">

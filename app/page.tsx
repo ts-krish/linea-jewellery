@@ -1,9 +1,9 @@
-import { Home } from "@/modules/home";
+import { Hero } from "@/modules/hero";
 
 const HomePage = () => {
   return (
     <>
-      <Home />
+      <Hero />
     </>
   );
 };
