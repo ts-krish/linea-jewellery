@@ -1,6 +1,7 @@
 "use client";
 
 import { MENUS } from "@/lib/navigation";
+import { CartItem } from "@/modules/cart";
 import logo from "@/public/navbar/LINEA-1.svg";
 import earring from "@/public/products/earring.jpg";
 import { Handbag, Heart, Search } from "lucide-react";
@@ -17,7 +18,6 @@ import {
   SheetHeader,
   SheetTitle,
 } from "../ui";
-import CartItem from "./CartItem";
 import HoverMenu from "./HoverMenu";
 import MobileMenu from "./MobileMenu";
 

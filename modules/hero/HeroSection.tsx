@@ -2,7 +2,7 @@ import earings from "@/public/hero/earrings-collection.png";
 import bracelet from "@/public/hero/link-bracelet.png";
 import Image from "next/image";
 
-const Hero = () => {
+const HeroSection = () => {
   return (
     <section>
       <div className="grid gap-5 mx-8 mt-5 lg:grid-cols-2">
@@ -39,4 +39,4 @@ const Hero = () => {
   );
 };
 
-export default Hero;
+export default HeroSection;
