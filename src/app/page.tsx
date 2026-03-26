@@ -1,4 +1,5 @@
 import {
+  AboutSection,
   FashionSection,
   HeroSection,
   LifeStyleSection,
@@ -12,6 +13,7 @@ const HomePage = () => {
       <ProductSection />
       <FashionSection />
       <LifeStyleSection />
+      <AboutSection />
     </>
   );
 };

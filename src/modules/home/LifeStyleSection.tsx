@@ -17,8 +17,8 @@ const LifeStyleSection = () => {
             />
           </div>
           <div className="mt-4">
-            <h3 className="text-xs">Artisan Craft</h3>
-            <p className="text-xs mt-2 text-gray-500">
+            <h3 className="text-sm">Artisan Craft</h3>
+            <p className="text-sm mt-2 text-gray-500">
               Handcrafted pieces with meticulous attention to detail.
             </p>
           </div>
@@ -34,8 +34,8 @@ const LifeStyleSection = () => {
             />
           </div>
           <div className="mt-4">
-            <h3 className="text-xs font-bold">Circular Elements</h3>
-            <p className="text-xs mt-2 text-gray-500">
+            <h3 className="text-sm font-bold">Circular Elements</h3>
+            <p className="text-sm mt-2 text-gray-500">
               Geometric perfection meets contemporary minimalism in our latest
               collection.
             </p>

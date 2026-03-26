@@ -9,8 +9,8 @@ const FashionSection = () => {
           <Image className="object-cover" src={fashion} alt="fashion-image" />
         </div>
         <div className="my-5">
-          <h3 className="font-bold text-xs">Modern Heritage</h3>
-          <p className="text-xs">Contemporary jewelry crafted with timeless elegance</p>
+          <h3 className="font-bold text-sm">Modern Heritage</h3>
+          <p className="text-sm">Contemporary jewelry crafted with timeless elegance</p>
         </div>
       </div>
     </section>
