@@ -5,7 +5,7 @@ import Image from "next/image";
 const HeroSection = () => {
   return (
     <section>
-      <div className="grid gap-5 mx-8 mt-5 lg:grid-cols-2">
+      <div className="grid gap-5 mx-5 mt-5 lg:grid-cols-2">
         <div>
           <div className="overflow-hidden mb-5">
             <Image
