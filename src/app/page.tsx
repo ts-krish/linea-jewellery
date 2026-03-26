@@ -1,10 +1,11 @@
-import { HeroSection, ProductSection } from "@/modules/home";
+import { FashionSection, HeroSection, ProductSection } from "@/modules/home";
 
 const HomePage = () => {
   return (
     <>
       <HeroSection />
       <ProductSection />
+      <FashionSection />
     </>
   );
 };
