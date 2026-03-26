@@ -7,10 +7,14 @@ import earring from "@/public/products/earring.jpg";
 import { Handbag, Heart, Search } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
+
 import {
   Badge,
   Button,
   Input,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
   Separator,
   Sheet,
   SheetContent,
@@ -18,6 +22,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from "../ui";
+
 import HoverMenu from "./HoverMenu";
 import MobileMenu from "./MobileMenu";
 
@@ -25,7 +30,7 @@ const popular_searches = [
   "Gold Rings",
   "Silver Neckless",
   "Pearl Earnings",
-  "Designer braceltes",
+  "Designer bracelets",
   "Wedding Rings",
   "Vintage Collection",
 ];
@@ -45,8 +50,8 @@ const cartItems: CartItemProps[] = [
     price: 2850,
   },
 ];
+
 const Navbar = () => {
-  const [openSearch, setOpenSearch] = useState(false);
   const [openFavorite, setOpenFavorite] = useState(false);
   const [openCart, setOpenCart] = useState(false);
 
@@ -54,10 +59,12 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-gray-100/50">
       <nav className="w-full relative">
         <div className="grid grid-cols-3 items-center p-5">
+          {/* LEFT */}
           <div className="flex">
             <div className="lg:hidden">
               <MobileMenu />
             </div>
+
             <div className="hidden gap-8 md:flex">
               {MENUS.map((menu) => (
                 <HoverMenu key={menu.title.name} menu={menu} />
@@ -65,25 +72,38 @@ const Navbar = () => {
             </div>
           </div>
 
+          {/* CENTER */}
           <div className="flex justify-center">
             <Image src={logo} alt="LINEA logo" width={90} priority />
           </div>
+
+          {/* RIGHT */}
           <div className="flex justify-end gap-5">
-            <Search
-              className="cursor-pointer"
-              onClick={() => setOpenSearch((prev) => !prev)}
-            />
-            {openSearch && (
-              <div className="absolute z-10 flex justify-center left-0 top-full w-full px-6 pt-4 bg-white shadow-lg">
-                <div className="lg:min-w-2xl flex flex-col justify-center">
-                  <div className="flex gap-3 justify-center items-center">
+            {/* SEARCH (Popover) */}
+            <Popover>
+              <PopoverTrigger asChild>
+                <Search className="cursor-pointer" />
+              </PopoverTrigger>
+
+              <PopoverContent
+                align="center"
+                sideOffset={10}
+                className="w-screen max-w-none left-0 translate-x-0 rounded-none border-none shadow-lg px-6 py-4"
+              >
+                <div className="lg:min-w-2xl mx-auto flex flex-col justify-center">
+                  {/* Input */}
+                  <div className="flex gap-3 items-center">
                     <Search size={20} />
                     <Input
-                      className="h-auto border-none rounded-none px-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0  bg-transparent placeholder:text-gray-400 text-lg"
+                      autoFocus
+                      className="h-auto border-none rounded-none px-0 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0 bg-transparent placeholder:text-gray-400 text-lg"
                       placeholder="Search for jewellery ..."
                     />
                   </div>
+
                   <Separator />
+
+                  {/* Popular Searches */}
                   <div className="flex flex-col gap-2 my-5">
                     <p>Popular Searches</p>
                     <div className="flex flex-wrap gap-2">
@@ -99,39 +119,49 @@ const Navbar = () => {
                     </div>
                   </div>
                 </div>
-              </div>
-            )}
+              </PopoverContent>
+            </Popover>
+
+            {/* FAVORITES */}
             <Sheet open={openFavorite} onOpenChange={setOpenFavorite}>
               <Heart
                 onClick={() => setOpenFavorite((prev) => !prev)}
                 className="cursor-pointer hidden md:block"
               />
+
               <SheetContent className="pt-3" side="right">
                 <SheetHeader>
                   <SheetTitle className="text-lg">Your Favourites</SheetTitle>
                 </SheetHeader>
+
                 <Separator />
+
                 <SheetDescription className="px-3">
                   You haven&apos;t added any favorites yet. Browse our
                   collection and click the heart icon to save items you love.
                 </SheetDescription>
               </SheetContent>
             </Sheet>
+
+            {/* CART */}
             <Sheet open={openCart} onOpenChange={setOpenCart}>
               <Handbag
                 onClick={() => setOpenCart(true)}
                 className="cursor-pointer"
               />
+
               <SheetContent className="pt-3" side="right">
                 <SheetHeader>
                   <SheetTitle className="text-lg">Shopping Bag</SheetTitle>
                 </SheetHeader>
+
                 <Separator />
+
                 <div className="flex lg:hidden flex-col items-center gap-4">
                   <Button
                     className="flex items-center text-base px-20"
-                    size={"lg"}
-                    variant={"outline"}
+                    size="lg"
+                    variant="outline"
                     onClick={() => setOpenFavorite((prev) => !prev)}
                   >
                     <Heart />
@@ -139,6 +169,7 @@ const Navbar = () => {
                   </Button>
                   <Separator />
                 </div>
+
                 <SheetDescription asChild className="px-3">
                   <div>
                     {cartItems.length === 0 ? (
@@ -150,6 +181,7 @@ const Navbar = () => {
                     )}
                   </div>
                 </SheetDescription>
+
                 <Separator />
               </SheetContent>
             </Sheet>

@@ -1,6 +1,7 @@
+export * from "./badge";
 export * from "./button";
+export * from "./carousel";
 export * from "./input";
+export * from "./popover";
 export * from "./separator";
 export * from "./sheet";
-export * from "./badge";
-

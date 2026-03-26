@@ -11,11 +11,7 @@ import shadowline from "@/public/products/shadowline.jpeg";
 import Autoplay from "embla-carousel-autoplay";
 import ProductCard, { Product } from "./ProductCard";
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-} from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui";
 
 const products: Product[] = [
   {
