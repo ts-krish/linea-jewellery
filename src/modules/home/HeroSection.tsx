@@ -1,5 +1,5 @@
-import earings from "@/public/hero/earrings-collection.png";
-import bracelet from "@/public/hero/link-bracelet.png";
+import earings from "@public/hero/earrings-collection.png";
+import bracelet from "@public/hero/link-bracelet.png";
 import Image from "next/image";
 
 const HeroSection = () => {

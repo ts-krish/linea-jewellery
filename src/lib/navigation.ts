@@ -1,8 +1,8 @@
-import arcus_bracelet from "@/public/navbar/arcus-bracelet.png";
-import bracelet from "@/public/navbar/bracelet.png";
-import earrings from "@/public/navbar/earings.png";
-import founders from "@/public/navbar/founders.png";
-import rings from "@/public/navbar/ring.png";
+import arcus_bracelet from "@public/navbar/arcus-bracelet.png";
+import bracelet from "@public/navbar/bracelet.png";
+import earrings from "@public/navbar/earings.png";
+import founders from "@public/navbar/founders.png";
+import rings from "@public/navbar/ring.png";
 import { Menu } from "@/types";
 
 export const MENUS : Menu[]= [

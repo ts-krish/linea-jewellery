@@ -2,8 +2,8 @@
 
 import { MENUS } from "@/lib/navigation";
 import { CartItem } from "@/modules/cart";
-import logo from "@/public/navbar/LINEA-1.svg";
-import earring from "@/public/products/earring.jpg";
+import logo from "@public/navbar/LINEA-1.svg";
+import earring from "@public/products/earring.jpg";
 import { Handbag, Heart, Search } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
@@ -72,14 +72,11 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* CENTER */}
           <div className="flex justify-center">
             <Image src={logo} alt="LINEA logo" width={90} priority />
           </div>
 
-          {/* RIGHT */}
           <div className="flex justify-end gap-5">
-            {/* SEARCH (Popover) */}
             <Popover>
               <PopoverTrigger asChild>
                 <Search className="cursor-pointer" />
@@ -91,7 +88,6 @@ const Navbar = () => {
                 className="w-screen max-w-none left-0 translate-x-0 rounded-none border-none shadow-lg px-6 py-4"
               >
                 <div className="lg:min-w-2xl mx-auto flex flex-col justify-center">
-                  {/* Input */}
                   <div className="flex gap-3 items-center">
                     <Search size={20} />
                     <Input
@@ -100,10 +96,8 @@ const Navbar = () => {
                       placeholder="Search for jewellery ..."
                     />
                   </div>
-
                   <Separator />
 
-                  {/* Popular Searches */}
                   <div className="flex flex-col gap-2 my-5">
                     <p>Popular Searches</p>
                     <div className="flex flex-wrap gap-2">
@@ -122,7 +116,6 @@ const Navbar = () => {
               </PopoverContent>
             </Popover>
 
-            {/* FAVORITES */}
             <Sheet open={openFavorite} onOpenChange={setOpenFavorite}>
               <Heart
                 onClick={() => setOpenFavorite((prev) => !prev)}
@@ -143,7 +136,6 @@ const Navbar = () => {
               </SheetContent>
             </Sheet>
 
-            {/* CART */}
             <Sheet open={openCart} onOpenChange={setOpenCart}>
               <Handbag
                 onClick={() => setOpenCart(true)}
@@ -181,7 +173,6 @@ const Navbar = () => {
                     )}
                   </div>
                 </SheetDescription>
-
                 <Separator />
               </SheetContent>
             </Sheet>

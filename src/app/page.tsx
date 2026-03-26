@@ -1,5 +1,4 @@
-import { HeroSection } from "@/modules/hero";
-import { ProductSection } from "@/modules/product";
+import { HeroSection, ProductSection } from "@/modules/home";
 
 const HomePage = () => {
   return (
