@@ -51,7 +51,7 @@ const Navbar = () => {
   const [openCart, setOpenCart] = useState(false);
 
   return (
-    <header>
+    <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-gray-100/50">
       <nav className="w-full relative">
         <div className="grid grid-cols-3 items-center p-5">
           <div className="flex">
