@@ -4,8 +4,7 @@ import Image from "next/image";
 
 const OurStory = () => {
   return (
-    <section className="flex mt-10 pt-5">
-      <div className="md:ml-40 w-full px-10">
+      <div className="w-full">
         <div className="flex gap-5 flex-col ">
           <h1 className="text-5xl">Our Story</h1>
           <p className="text-black/70 text-lg">
@@ -94,7 +93,6 @@ const OurStory = () => {
           </div>
         </div>
       </div>
-    </section>
   );
 };
 
