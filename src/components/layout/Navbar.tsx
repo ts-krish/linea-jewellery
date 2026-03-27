@@ -6,6 +6,7 @@ import logo from "@public/navbar/LINEA-1.svg";
 import earring from "@public/products/earring.jpg";
 import { Handbag, Heart, Search } from "lucide-react";
 import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 import {
@@ -73,7 +74,9 @@ const Navbar = () => {
           </div>
 
           <div className="flex justify-center">
-            <Image src={logo} alt="LINEA logo" width={90} priority />
+            <Link href={"/"}>
+              <Image src={logo} alt="LINEA logo" width={90} priority />
+            </Link>
           </div>
 
           <div className="flex justify-end gap-5">
