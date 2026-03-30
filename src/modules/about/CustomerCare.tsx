@@ -1,11 +1,17 @@
+"use client";
+
 import {
-    Accordion,
-    AccordionContent,
-    AccordionItem,
-    AccordionTrigger,
-    Button,
-    Separator,
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+  Button,
+  Input,
+  Label,
+  Separator,
+  Textarea,
 } from "@/components/ui";
+import { useState } from "react";
 
 const faqData = [
   {
@@ -40,6 +46,36 @@ const faqData = [
   },
 ];
 const CustomerCare = () => {
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    orderNumber: "",
+    message: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setForm((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log(form);
+
+    setForm({
+      firstName: "",
+      lastName: "",
+      email: "",
+      orderNumber: "",
+      message: "",
+    });
+  };
+
   return (
     <div>
       <div className="flex flex-col gap-5">
@@ -107,8 +143,76 @@ const CustomerCare = () => {
         <div className="text-3xl my-10">
           <h3>Contact Form</h3>
         </div>
-        <div>
-            
+        <div className="my-10">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* NAME */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="">
+                <Label>First Name</Label>
+                <Input
+                className="rounded-none my-3 py-5"
+                  name="firstName"
+                  value={form.firstName}
+                  onChange={handleChange}
+                  placeholder="Enter your first name"
+                  required
+                />
+              </div>
+
+              <div>
+                <Label>Last Name</Label>
+                <Input
+                  name="lastName"
+                  className="rounded-none my-3 py-5"
+                  value={form.lastName}
+                  onChange={handleChange}
+                  placeholder="Enter your last name"
+                  required
+                  />
+              </div>
+            </div>
+
+            <div>
+              <Label>Email</Label>
+              <Input
+                type="email"
+                name="email"
+                className="rounded-none mt-5 py-5"
+                value={form.email}
+                onChange={handleChange}
+                placeholder="Enter your email"
+                required
+                />
+            </div>
+
+            <div>
+              <Label>Order Number (Optional)</Label>
+              <Input
+                className="rounded-none mt-5 py-5"
+                placeholder="Enter your order number if applicable"
+                name="orderNumber"
+                value={form.orderNumber}
+                onChange={handleChange}
+                />
+            </div>
+
+            <div>
+              <Label>How can we help you?</Label>
+              <Textarea
+                name="message"
+                className="mt-3 rounded-none"
+                placeholder="Please describe your inquiry in detail"
+                value={form.message}
+                onChange={handleChange}
+                rows={5}
+                required
+              />
+            </div>
+
+            <Button type="submit" className="w-full py-5 font-extrabold rounded-none">
+              Send Message
+            </Button>
+          </form>
         </div>
       </div>
     </div>
