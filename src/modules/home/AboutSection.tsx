@@ -7,7 +7,9 @@ const AboutSection = () => {
     <section>
       <div className="grid gap-5 mx-5 md:grid-cols-2">
         <div className="flex flex-col gap-5 md:pr-60 order-2 md:order-1 items-start justify-center">
-          <h2 className="font-semibold md:text-lg text-2xl">Jewelry Drawn From Shadows and Lines</h2>
+          <h2 className="font-semibold md:text-lg text-2xl">
+            Jewelry Drawn From Shadows and Lines
+          </h2>
           <p className="text-sm">
             Linea was born from the meeting of two minds who saw beauty not just
             in ornament, but in structure. With backgrounds spanning
@@ -18,7 +20,7 @@ const AboutSection = () => {
           <Button variant={"link"}>Read our full story </Button>
         </div>
         <div className="order-1">
-          <Image src={founders} alt="founders" />
+          <Image src={founders} loading="lazy" alt="founders" />
         </div>
       </div>
     </section>
