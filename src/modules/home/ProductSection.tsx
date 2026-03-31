@@ -1,5 +1,6 @@
 "use client";
 
+import { Product } from "@/types";
 import bracelet_model from "@public/products/bracelet_model.png";
 import earring from "@public/products/earring.jpg";
 import earring_model from "@public/products/earring_model.png";
@@ -9,7 +10,7 @@ import lintel from "@public/products/lintel.jpeg";
 import obique from "@public/products/obique.jpeg";
 import shadowline from "@public/products/shadowline.jpeg";
 import Autoplay from "embla-carousel-autoplay";
-import ProductCard, { Product } from "./ProductCard";
+import ProductCard from "./ProductCard";
 
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui";
 
