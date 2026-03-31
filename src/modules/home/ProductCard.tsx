@@ -6,7 +6,7 @@ import Image from "next/image";
 const ProductCard = ({ product }: { product: Product }) => {
   return (
     <div className="group cursor-pointer">
-      <div className="relative w-full aspect-square lg:h-80 overflow-hidden">
+      <div className="relative w-full aspect-square lg:h-100 overflow-hidden">
         <div className="absolute inset-0 bg-black/2 z-10 pointer-events-none" />
         <Image
           src={product.image}

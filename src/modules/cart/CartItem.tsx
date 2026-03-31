@@ -33,7 +33,7 @@ const CartItem = ({ image, title, brand, price }: CartItemProps) => {
             <p className="text-sm text-black font-bold">{brand}</p>
           </div>
 
-          <p className="text-sm font-medium">₹{price}</p>
+          <p className="text-sm font-medium">€{price}</p>
         </div>
 
         <div className="flex items-center gap-2">

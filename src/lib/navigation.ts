@@ -7,7 +7,7 @@ import { Menu } from "@/types";
 
 export const MENUS : Menu[]= [
   {
-    title: { name: "Shop", href: "/shop" },
+    title: { name: "Shop", href: "/category/shop" },
     items: [
       { name: "Rings", href: "/category/rings" },
       { name: "Necklaces", href: "/category/necklaces" },
