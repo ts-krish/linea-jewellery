@@ -1,14 +1,7 @@
 "use client";
 
-import Image, { StaticImageData } from "next/image";
-
-export type Product = {
-  title: string;
-  subtitle: string;
-  price: number;
-  image: StaticImageData;
-  hoverImage: StaticImageData;
-};
+import type { Product } from "@/types";
+import Image from "next/image";
 
 const ProductCard = ({ product }: { product: Product }) => {
   return (
@@ -19,6 +12,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           src={product.image}
           alt={product.title}
           fill
+          loading="lazy"
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
           className="object-cover transition-opacity duration-300 group-hover:opacity-0"
         />
@@ -27,6 +21,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           src={product.hoverImage}
           alt={product.title}
           fill
+          loading="lazy"
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
           className="object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
         />
@@ -38,7 +33,7 @@ const ProductCard = ({ product }: { product: Product }) => {
           <p className="text-sm font-bold">{product.subtitle}</p>
         </div>
 
-        <p className="text-sm font-medium">₹{product.price}</p>
+        <p className="text-sm font-medium">€{product.price}</p>
       </div>
     </div>
   );

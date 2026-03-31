@@ -5,7 +5,7 @@ const FashionSection = () => {
   return (
     <section>
       <div className="mx-5">
-        <div className="lg:h-270 overflow-hidden">
+        <div className="lg:h-210 overflow-hidden">
           <Image className="object-cover" src={fashion} alt="fashion-image" />
         </div>
         <div className="my-5">
