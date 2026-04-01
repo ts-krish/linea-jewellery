@@ -19,6 +19,7 @@ const CartItem = ({ image, title, brand, price }: CartItemProps) => {
     <div className="flex gap-4 py-4 border-b">
       <div className="relative w-20 h-20">
         <Image
+          loading="lazy"
           src={image}
           alt={title}
           fill

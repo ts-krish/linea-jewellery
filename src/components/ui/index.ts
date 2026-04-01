@@ -8,6 +8,7 @@ export * from "./input";
 export * from "./label";
 export * from "./pagination";
 export * from "./popover";
+export * from "./radio-group";
 export * from "./separator";
 export * from "./sheet";
 export * from "./table";
