@@ -4,14 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "migrate:create": "node-pg-migrate create",
+    "migrate:up": "node-pg-migrate -r dotenv/config up",
+    "migrate:down": "node-pg-migrate -r dotenv/config down",
+    "seed": "tsx -r dotenv/config seeds/seed.ts"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "dependencies": {
+    "dotenv": "^17.4.0",
     "express": "^5.2.1",
+    "node-pg-migrate": "^8.0.4",
     "pg": "^8.20.0"
   },
   "devDependencies": {
