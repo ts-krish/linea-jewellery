@@ -1,18 +1,35 @@
+import cors from "cors";
 import "dotenv/config";
 import type { Request, Response } from "express";
 import express from "express";
-import router from "./routes/product.ts";
+import {
+  CartItemRouter,
+  CartRouter,
+  ProductImageRouter,
+  ProductRouter,
+  ReviewRouter,
+  UserRouter,
+} from "./routes";
 
 const PORT = process.env.PORT;
 const app = express();
+
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
-app.use("/uploads", express.static("uploads"));
-app.use("/", router);
+app.use("/api/uploads", express.static("uploads"));
 
-app.get("/", (req: Request, res: Response) => {
-  res.json({ message: "Hello from backend :) " });
-});
+app.use("/api", ProductRouter);
+app.use("/api", UserRouter);
+app.use("/api", CartRouter);
+app.use("/api", CartItemRouter);
+app.use("/api", ProductImageRouter);
+app.use("/api", ReviewRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

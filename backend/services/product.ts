@@ -1,5 +1,5 @@
-import * as productRepository from "../repositories/product.ts";
-import type { ProductInput } from "../repositories/product.ts";
+import * as productRepository from "../repositories/product";
+import type { ProductInput } from "../types";
 
 export const getAllProducts = async (page = 1, limit = 20) => {
   const offset = (page - 1) * limit;
@@ -14,7 +14,10 @@ export const createProduct = async (productData: ProductInput) => {
   return await productRepository.create(productData);
 };
 
-export const updateProduct = async (id: string, productData: Partial<ProductInput>) => {
+export const updateProduct = async (
+  id: string,
+  productData: Partial<ProductInput>,
+) => {
   return await productRepository.update(id, productData);
 };
 

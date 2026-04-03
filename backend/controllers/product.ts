@@ -1,12 +1,12 @@
 import type { Request, Response } from "express";
-import * as productService from "../services/product.ts";
+import * as productService from "../services/product";
 
 export const getProducts = async (req: Request, res: Response) => {
   try {
     const page = parseInt(String(req.query.page as string)) || 1;
     const limit = parseInt(String(req.query.limit as string)) || 20;
     const products = await productService.getAllProducts(page, limit);
-    res.json({ Products : products });
+    res.json({ Products: products });
   } catch (error) {
     console.error("Error fetching products:", error);
     res.status(500).json({ error: "Internal server error" });
@@ -21,7 +21,7 @@ export const getProductById = async (req: Request, res: Response) => {
       res.status(404).json({ error: "Product not found" });
       return;
     }
-    res.json({ Product : product });
+    res.json({ Product: product });
   } catch (error) {
     console.error(`Error fetching product ${req.params.id}:`, error);
     res.status(500).json({ error: "Internal server error" });
