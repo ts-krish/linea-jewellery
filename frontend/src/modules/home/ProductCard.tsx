@@ -1,13 +1,15 @@
 "use client";
 
-import type { Product } from "../../types";
 import Image from "next/image";
 import Link from "next/link";
+import type { Product } from "../../types";
 
 const ProductCard = ({ product }: { product: Product }) => {
-  const slug = product.subtitle.toLowerCase().replace(/\s+/g, "-");
   return (
-    <Link href={`/product/${slug}`} className="group cursor-pointer block">
+    <Link
+      href={`/product/${product.id}`}
+      className="group cursor-pointer block"
+    >
       <div className="group cursor-pointer">
         <div className="relative w-full aspect-square lg:h-100 overflow-hidden">
           <div className="absolute inset-0 bg-black/2 z-10 pointer-events-none" />
@@ -18,6 +20,7 @@ const ProductCard = ({ product }: { product: Product }) => {
             loading="lazy"
             sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
             className="object-cover transition-opacity duration-300 group-hover:opacity-0"
+            unoptimized
           />
 
           <Image
@@ -27,6 +30,7 @@ const ProductCard = ({ product }: { product: Product }) => {
             loading="lazy"
             sizes="(max-width: 768px) 50vw, (max-width: 1200px) 25vw, 20vw"
             className="object-cover opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            unoptimized
           />
         </div>
 

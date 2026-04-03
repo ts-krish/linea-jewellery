@@ -1,5 +1,3 @@
-import { StaticImageData } from "next/image";
-
 export type ProductDetailData = {
   id: string;
   title: string;
@@ -10,7 +8,7 @@ export type ProductDetailData = {
   dimensions: string;
   weight: string;
   editor_note: string;
-  images: StaticImageData[];
+  images: string[];
   description: string;
   product_detail: {
     SKU: string;
@@ -18,6 +16,6 @@ export type ProductDetailData = {
     Closure: string;
     Hypoallergenic: string;
   };
-  care: string;
-  customer_review: string;
+  care: string[];
+  customer_review?: string;
 };

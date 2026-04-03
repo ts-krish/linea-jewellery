@@ -1,5 +1,9 @@
 "use client";
 
+import { Minus, Plus } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useState } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -9,10 +13,6 @@ import {
   Separator,
 } from "../../components/ui";
 import type { ProductDetailData } from "../../types";
-import { Minus, Plus } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { useState } from "react";
 
 const ProductDetail = ({ product }: { product: ProductDetailData }) => {
   const [qty, setQty] = useState(1);
@@ -131,7 +131,9 @@ const ProductDetail = ({ product }: { product: ProductDetailData }) => {
               <AccordionTrigger>Care & Cleaning</AccordionTrigger>
               <AccordionContent className="text-sm text-black/70 space-y-2">
                 <ul className="list-disc pl-5 space-y-2">
-                  <li>{product.care}</li>
+                  {product.care.map((instruction, i) => (
+                    <li key={i}>{instruction}</li>
+                  ))}
                 </ul>
               </AccordionContent>
             </AccordionItem>
