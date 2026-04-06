@@ -189,7 +189,7 @@ const ProductDetail = ({ product }: { product: ProductDetailData }) => {
       if (apiProduct) {
         await addToCart(apiProduct, qty);
         setAdded(true);
-        setTimeout(() => setAdded(false), 2000);
+        setTimeout(() => setAdded(false), 3000);
       }
     } finally {
       setAdding(false);
@@ -305,11 +305,11 @@ const ProductDetail = ({ product }: { product: ProductDetailData }) => {
           </div>
 
           <Button
-            className="h-12 bg-black text-white hover:bg-black/80 mb-8 transition-all"
+            className="h-12 bg-black text-white cursor-pointer hover:bg-black/80 mb-8 transition-all"
             onClick={handleAddToCart}
             disabled={adding}
           >
-            {adding ? "Adding..." : added ? "Added to Bag ✓" : "Add to Bag"}
+            {adding ? "Adding..." : added ? "Added to Bag" : "Add to Bag"}
           </Button>
 
           <Accordion type="multiple" className="w-full">

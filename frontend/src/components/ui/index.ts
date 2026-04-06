@@ -12,5 +12,6 @@ export * from "./popover";
 export * from "./radio-group";
 export * from "./separator";
 export * from "./sheet";
+export * from "./sonner";
 export * from "./table";
 export * from "./textarea";

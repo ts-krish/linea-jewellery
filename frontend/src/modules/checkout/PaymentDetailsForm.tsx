@@ -4,7 +4,7 @@ const PaymentDetailsForm = () => {
   return (
     <div className="space-y-5">
       <FormField
-        name="cardholderName"
+        name="cardHolderName"
         label="Cardholder Name"
         placeholder="Name on card"
       />

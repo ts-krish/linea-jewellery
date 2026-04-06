@@ -1,7 +1,7 @@
-import { Button } from "../../components/ui";
 import founders from "@public/founder/founders.png";
 import Image from "next/image";
-
+import Link from "next/link";
+import { Button } from "../../components/ui";
 const AboutSection = () => {
   return (
     <section>
@@ -17,7 +17,9 @@ const AboutSection = () => {
             be more than decoration — it could be an extension of space, light,
             and line.
           </p>
-          <Button variant={"link"}>Read our full story </Button>
+          <Link href="/about/our-story" >
+            <Button variant={"link"}>Read our full story </Button>
+          </Link>
         </div>
         <div className="order-1">
           <Image src={founders} loading="lazy" alt="founders" />

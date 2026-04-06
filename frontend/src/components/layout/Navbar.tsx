@@ -1,13 +1,13 @@
 "use client";
 
-import { MENUS } from "../../lib/navigation";
-import { CartItem } from "../../modules/cart";
-import { useCart } from "../../context/CartContext";
 import logo from "@public/navbar/LINEA-1.svg";
 import { Handbag, Heart, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { useCart } from "../../context/CartContext";
+import { MENUS } from "../../lib/navigation";
+import { CartItem } from "../../modules/cart";
 
 import {
   Badge,
@@ -125,7 +125,10 @@ const Navbar = () => {
             </Sheet>
 
             <Sheet open={openCart} onOpenChange={setOpenCart}>
-              <div className="relative cursor-pointer" onClick={() => setOpenCart(true)}>
+              <div
+                className="relative cursor-pointer"
+                onClick={() => setOpenCart(true)}
+              >
                 <Handbag className="cursor-pointer" />
                 {totalItems > 0 && (
                   <span className="absolute -top-2 -right-2 bg-black text-white text-xs rounded-full w-4 h-4 flex items-center justify-center leading-none">
@@ -167,7 +170,7 @@ const Navbar = () => {
                           cart_item_id={item.cart_item_id}
                           image={
                             item.product.images.find(
-                              (img) => img.image_type === "product"
+                              (img) => img.image_type === "product",
                             )?.image_url ??
                             item.product.images[0]?.image_url ??
                             ""

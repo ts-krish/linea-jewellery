@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "sonner";
 import { Footer, Navbar } from "../components/layout";
 import { CartProvider } from "../context/CartContext";
 import "./globals.css";
@@ -40,6 +41,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
         </CartProvider>
+        <Toaster />
       </body>
     </html>
   );
