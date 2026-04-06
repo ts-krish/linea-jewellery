@@ -169,24 +169,14 @@ const ProductDetail = ({ product }: { product: ProductDetailData }) => {
   useEffect(() => {
     fetchProducts()
       .then((all) => {
-        const filtered = all
-          .filter((p) => p.product_id !== product.id)
-          .sort((a, b) =>
-            a.category.toLowerCase() === product.category.toLowerCase()
-              ? -1
-              : b.category.toLowerCase() === product.category.toLowerCase()
-                ? 1
-                : 0,
-          )
-          .slice(0, 4)
-          .map((p) => ({
-            id: p.product_id,
-            title: p.category,
-            subtitle: p.brand_name,
-            price: parseFloat(p.price),
-            image: getProductImageUrl(p),
-            hoverImage: getModelImageUrl(p),
-          }));
+        const filtered = all.map((p) => ({
+          id: p.product_id,
+          title: p.category,
+          subtitle: p.brand_name,
+          price: parseFloat(p.price),
+          image: getProductImageUrl(p),
+          hoverImage: getModelImageUrl(p),
+        }));
         setRelatedProducts(filtered);
       })
       .catch(() => {});

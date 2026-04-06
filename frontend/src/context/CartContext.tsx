@@ -20,7 +20,7 @@ import {
   updateCartItem,
 } from "../lib/api";
 
-export interface CartLineItem {
+interface CartLineItem {
   cart_item_id: string;
   cart_id: string;
   product_id: string;
@@ -43,14 +43,14 @@ interface CartContextValue {
 const SESSION_KEY = "linea_session_id";
 const CART_KEY = "linea_cart_id";
 
-function getOrCreateSessionId(): string {
+const getOrCreateSessionId = (): string => {
   let id = localStorage.getItem(SESSION_KEY);
   if (!id) {
     id = crypto.randomUUID();
     localStorage.setItem(SESSION_KEY, id);
   }
   return id;
-}
+};
 
 const CartContext = createContext<CartContextValue | null>(null);
 
@@ -98,7 +98,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const hydrateItems = async (
-    rawItems: ApiCartItem[]
+    rawItems: ApiCartItem[],
   ): Promise<CartLineItem[]> => {
     const results = await Promise.allSettled(
       rawItems.map(async (ci) => {
@@ -112,7 +112,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
           unit_price: parseFloat(ci.unit_price),
           product,
         } satisfies CartLineItem;
-      })
+      }),
     );
     return results
       .filter((r) => r.status === "fulfilled")
@@ -124,13 +124,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       if (!cartIdRef.current) return;
       setIsLoading(true);
       try {
-        const existing = items.find(
-          (i) => i.product_id === product.product_id
-        );
+        const existing = items.find((i) => i.product_id === product.product_id);
         if (existing) {
           await changeQuantity(
             existing.cart_item_id,
-            existing.quantity + quantity
+            existing.quantity + quantity,
           );
           return;
         }
@@ -159,7 +157,7 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [items]
+    [items],
   );
 
   const changeQuantity = useCallback(
@@ -170,8 +168,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         await updateCartItem(cartItemId, quantity);
         setItems((prev) =>
           prev.map((i) =>
-            i.cart_item_id === cartItemId ? { ...i, quantity } : i
-          )
+            i.cart_item_id === cartItemId ? { ...i, quantity } : i,
+          ),
         );
       } catch (err) {
         console.error("[Cart] changeQuantity failed:", err);
@@ -179,10 +177,9 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
         setIsLoading(false);
       }
     },
-    []
+    [],
   );
 
-  // ── Remove ────────────────────────────────────────────────────────────────
   const removeFromCart = useCallback(async (cartItemId: string) => {
     setIsLoading(true);
     try {
@@ -195,16 +192,12 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
   }, []);
 
-  // ── Clear (local only) ────────────────────────────────────────────────────
   const clearCart = useCallback(() => {
     setItems([]);
   }, []);
 
   const totalItems = items.reduce((acc, i) => acc + i.quantity, 0);
-  const subtotal = items.reduce(
-    (acc, i) => acc + i.unit_price * i.quantity,
-    0
-  );
+  const subtotal = items.reduce((acc, i) => acc + i.unit_price * i.quantity, 0);
 
   return (
     <CartContext.Provider

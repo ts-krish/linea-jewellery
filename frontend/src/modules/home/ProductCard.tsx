@@ -36,8 +36,8 @@ const ProductCard = ({ product }: { product: Product }) => {
 
         <div className="mt-3 flex justify-between items-start">
           <div>
-            <p className="text-sm font-medium">{product.title}</p>
-            <p className="text-sm font-bold">{product.subtitle}</p>
+            <p className="text-sm font-medium capitalize">{product.title}</p>
+            <p className="text-sm font-bold capitalize">{product.subtitle}</p>
           </div>
 
           <p className="text-sm font-medium">€{product.price}</p>
