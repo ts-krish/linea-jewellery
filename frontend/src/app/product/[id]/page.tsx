@@ -1,6 +1,7 @@
 import { fetchProductById } from "../../../lib/api";
 import { ProductDetail } from "../../../modules/product-detail";
 import type { ProductDetailData } from "../../../types";
+import { notFound } from "next/navigation";
 
 const ProductPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
@@ -34,19 +35,9 @@ const ProductPage = async ({ params }: { params: Promise<{ id: string }> }) => {
     console.error(`[ProductPage] Could not fetch product ${id} from API`);
   }
 
-  if (!product) {
-    return (
-      <div className="max-w-7xl mx-auto px-5 py-20 text-center">
-        <h1 className="text-2xl font-light mb-4">Product not found</h1>
-        <p className="text-black/50">
-          The product you&apos;re looking for doesn&apos;t exist or has been
-          removed.
-        </p>
-      </div>
-    );
-  }
+  if (!product) notFound();
 
-  return <ProductDetail product={product} />;
+  return <ProductDetail product={product!} />;
 };
 
 export default ProductPage;

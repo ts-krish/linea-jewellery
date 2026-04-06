@@ -2,10 +2,10 @@
 
 import { MENUS } from "../../lib/navigation";
 import { CartItem } from "../../modules/cart";
+import { useCart } from "../../context/CartContext";
 import logo from "@public/navbar/LINEA-1.svg";
-import earring from "@public/products/earring.jpg";
 import { Handbag, Heart, Search } from "lucide-react";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -29,32 +29,17 @@ import MobileMenu from "./MobileMenu";
 
 const popular_searches = [
   "Gold Rings",
-  "Silver Neckless",
-  "Pearl Earnings",
-  "Designer bracelets",
+  "Silver Necklace",
+  "Pearl Earrings",
+  "Designer Bracelets",
   "Wedding Rings",
   "Vintage Collection",
-];
-
-type CartItemProps = {
-  image: StaticImageData;
-  title: string;
-  brand: string;
-  price: number;
-};
-
-const cartItems: CartItemProps[] = [
-  {
-    image: earring,
-    title: "Earrings",
-    brand: "Pantheon",
-    price: 2850,
-  },
 ];
 
 const Navbar = () => {
   const [openFavorite, setOpenFavorite] = useState(false);
   const [openCart, setOpenCart] = useState(false);
+  const { items, totalItems, subtotal } = useCart();
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white/90 backdrop-blur-md border-b border-gray-100/50">
@@ -140,10 +125,14 @@ const Navbar = () => {
             </Sheet>
 
             <Sheet open={openCart} onOpenChange={setOpenCart}>
-              <Handbag
-                onClick={() => setOpenCart(true)}
-                className="cursor-pointer"
-              />
+              <div className="relative cursor-pointer" onClick={() => setOpenCart(true)}>
+                <Handbag className="cursor-pointer" />
+                {totalItems > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-black text-white text-xs rounded-full w-4 h-4 flex items-center justify-center leading-none">
+                    {totalItems}
+                  </span>
+                )}
+              </div>
 
               <SheetContent className="pt-3" side="right">
                 <SheetHeader>
@@ -166,17 +155,49 @@ const Navbar = () => {
                 </div>
 
                 <SheetDescription asChild className="px-3">
-                  <div>
-                    {cartItems.length === 0 ? (
+                  <div className="flex flex-col flex-1 overflow-y-auto">
+                    {items.length === 0 ? (
                       <p className="text-sm text-gray-500 text-center py-6">
-                        Your cart is empty
+                        Your bag is empty
                       </p>
                     ) : (
-                      cartItems.map((item, i) => <CartItem key={i} {...item} />)
+                      items.map((item) => (
+                        <CartItem
+                          key={item.cart_item_id}
+                          cart_item_id={item.cart_item_id}
+                          image={
+                            item.product.images.find(
+                              (img) => img.image_type === "product"
+                            )?.image_url ??
+                            item.product.images[0]?.image_url ??
+                            ""
+                          }
+                          title={item.product.category}
+                          brand={item.product.brand_name}
+                          price={item.unit_price}
+                          quantity={item.quantity}
+                        />
+                      ))
                     )}
                   </div>
                 </SheetDescription>
-                <Separator />
+
+                {items.length > 0 && (
+                  <>
+                    <Separator />
+                    <div className="px-3 py-4 space-y-3">
+                      <div className="flex justify-between text-sm">
+                        <span className="text-black/60">Subtotal</span>
+                        <span>€{subtotal.toLocaleString()}</span>
+                      </div>
+                      <Link href="/checkout" onClick={() => setOpenCart(false)}>
+                        <Button className="w-full bg-black text-white hover:bg-black/80">
+                          Checkout
+                        </Button>
+                      </Link>
+                    </div>
+                  </>
+                )}
               </SheetContent>
             </Sheet>
           </div>

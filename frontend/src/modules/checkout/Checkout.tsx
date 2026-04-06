@@ -1,11 +1,11 @@
 "use client";
 
-import { Button, Checkbox, Input, Label, Separator } from "../../components/ui";
-import { shippingAddressSchema } from "../../validation";
-import earring from "@public/products/earring.jpg";
 import { Form, Formik } from "formik";
-import { StaticImageData } from "next/image";
 import { useState } from "react";
+import { Button, Checkbox, Input, Label, Separator } from "../../components/ui";
+import { useCart } from "../../context/CartContext";
+import { getProductImageUrl } from "../../lib/api";
+import { shippingAddressSchema } from "../../validation";
 import { CartItem } from "../cart";
 import BillingAddressForm from "./BillingAddressForm";
 import CustomerDetailsForm from "./CustomerDetailsForm";
@@ -13,23 +13,9 @@ import PaymentDetailsForm from "./PaymentDetailsForm";
 import ShippingOptions from "./ShippingOptions";
 import ShippingAddressForm from "./ShipppingAddressForm";
 
-type CartItemProps = {
-  image: StaticImageData;
-  title: string;
-  brand: string;
-  price: number;
-};
-
-const cartItems: CartItemProps[] = [
-  {
-    image: earring,
-    title: "Earrings",
-    brand: "Pantheon",
-    price: 2850,
-  },
-];
-
 const Checkout = () => {
+  const { items, subtotal } = useCart();
+
   const initialValues = shippingAddressSchema.cast(
     {},
     { assert: false, stripUnknown: true },
@@ -51,9 +37,7 @@ const Checkout = () => {
           firstName: "",
           lastName: "",
           phone: "",
-
           ...initialValues,
-
           billingEmail: "",
           billingFirstName: "",
           billingLastName: "",
@@ -90,7 +74,6 @@ const Checkout = () => {
               />
               <Label htmlFor="billing-toggle">Other billing address</Label>
             </div>
-
             {showBillingAddress && <BillingAddressForm />}
           </div>
           <Separator />
@@ -108,7 +91,7 @@ const Checkout = () => {
           <div className="flex md:mx-10 flex-col gap-5 border border-gray-400 p-8">
             <div className="flex justify-between">
               <p className="text-black/60">Subtotal</p>
-              <p>€2,450</p>
+              <p>€{subtotal.toLocaleString()}</p>
             </div>
             <div className="flex justify-between">
               <p className="text-black/60">Shipping</p>
@@ -117,9 +100,10 @@ const Checkout = () => {
             <Separator />
             <div className="flex font-bold justify-between">
               <p>Total</p>
-              <p>€2,450</p>
+              <p>€{subtotal.toLocaleString()}</p>
             </div>
           </div>
+
           <Button type="submit" className="w-full p-5 font-extrabold">
             Complete Order
           </Button>
@@ -130,14 +114,27 @@ const Checkout = () => {
         <div>
           <h2 className="font-semibold mb-4">Order Summary</h2>
 
-          {cartItems.map((item, index) => (
-            <CartItem key={index} {...item} />
-          ))}
+          {items.length === 0 ? (
+            <p className="text-sm text-black/40">Your bag is empty.</p>
+          ) : (
+            items.map((item) => (
+              <CartItem
+                key={item.cart_item_id}
+                cart_item_id={item.cart_item_id}
+                image={getProductImageUrl(item.product)}
+                title={item.product.category}
+                brand={item.product.brand_name}
+                price={item.unit_price}
+                quantity={item.quantity}
+              />
+            ))
+          )}
         </div>
+
         <div>
           {!showInput ? (
             <p
-              className="underline cursor-pointer"
+              className="underline cursor-pointer text-sm"
               onClick={() => setShowInput(true)}
             >
               Discount Code
@@ -150,7 +147,6 @@ const Checkout = () => {
                 onChange={(e) => setCode(e.target.value)}
                 autoFocus
               />
-
               <Button
                 type="button"
                 onClick={handleApply}
@@ -158,7 +154,6 @@ const Checkout = () => {
               >
                 Apply
               </Button>
-
               <Button
                 type="button"
                 variant="ghost"
@@ -172,9 +167,10 @@ const Checkout = () => {
             </div>
           )}
         </div>
-        <div className="flex justify-between">
+
+        <div className="flex justify-between text-sm">
           <p>Subtotal</p>
-          <p>€2,850</p>
+          <p>€{subtotal.toLocaleString()}</p>
         </div>
       </aside>
     </section>

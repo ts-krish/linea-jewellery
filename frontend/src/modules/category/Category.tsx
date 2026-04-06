@@ -39,13 +39,6 @@ const filterData = {
   material: ["Gold", "Silver", "Rose Gold", "Platinum"],
 };
 
-const categoryMap: Record<string, string> = {
-  earrings: "Earrings",
-  bracelets: "Bracelets",
-  rings: "Rings",
-  necklaces: "Necklaces",
-};
-
 interface CategoryProps {
   slug: string;
   products: Product[];
@@ -82,13 +75,8 @@ const Category = ({ slug, products }: CategoryProps) => {
 
   const getFilteredProducts = () => {
     return products.filter((product) => {
-      // category from slug
-      if (slug !== "shop") {
-        const mapped = categoryMap[slug.toLowerCase()];
-        if (!mapped || product.title !== mapped) return false;
-      }
-
-      // price
+      // category filtering is already done server-side via fetchProductsByCategory
+      // only apply client-side price filter here
       if (filters.price.length) {
         const match = filters.price.some((range) => {
           if (range === "Under €1,000") return product.price < 1000;
@@ -99,10 +87,8 @@ const Category = ({ slug, products }: CategoryProps) => {
           if (range === "Over €3,000") return product.price > 3000;
           return false;
         });
-
         if (!match) return false;
       }
-
       return true;
     });
   };
@@ -225,7 +211,7 @@ const Category = ({ slug, products }: CategoryProps) => {
       <div className="px-5 pb-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {finalProducts.map((product) => (
-            <ProductCard key={product.subtitle} product={product} />
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
       </div>
