@@ -10,16 +10,25 @@ import {
   AccordionItem,
   AccordionTrigger,
   Button,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
   Separator,
 } from "../../components/ui";
 import { useCart } from "../../context/CartContext";
 import {
   createReview,
   fetchProductById,
+  fetchProducts,
   fetchReviewsByProduct,
+  getModelImageUrl,
+  getProductImageUrl,
   type ApiReview,
 } from "../../lib/api";
-import type { ProductDetailData } from "../../types";
+import type { Product, ProductDetailData } from "../../types";
+import { ProductCard } from "../home";
 
 const StarRating = ({ rating }: { rating: number }) => (
   <div className="flex gap-0.5">
@@ -35,13 +44,14 @@ const StarRating = ({ rating }: { rating: number }) => (
   </div>
 );
 
-const ReviewForm = ({
+const ReviewDialog = ({
   productId,
   onSubmitted,
 }: {
   productId: string;
   onSubmitted: (review: ApiReview) => void;
 }) => {
+  const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [rating, setRating] = useState(5);
   const [comment, setComment] = useState("");
@@ -64,6 +74,7 @@ const ReviewForm = ({
         comment: comment.trim() || undefined,
       });
       onSubmitted(review);
+      setOpen(false);
       setName("");
       setComment("");
       setRating(5);
@@ -75,52 +86,69 @@ const ReviewForm = ({
   };
 
   return (
-    <div className="mt-6 border-t pt-6 space-y-4">
-      <p className="text-sm font-medium text-black">Write a Review</p>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button
+          variant="outline"
+          className="mt-4 cursor-pointer hover:bg-black hover:text-white text-black border-black rounded-none p-5 w-full text-sm"
+        >
+          Review Product
+        </Button>
+      </DialogTrigger>
 
-      <div className="flex gap-1">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <Star
-            key={star}
-            size={18}
-            className={`cursor-pointer transition-colors ${
-              star <= (hovered || rating)
-                ? "fill-black text-black"
-                : "fill-none text-black/20"
-            }`}
-            onMouseEnter={() => setHovered(star)}
-            onMouseLeave={() => setHovered(0)}
-            onClick={() => setRating(star)}
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle className="font-light text-xl">
+            Write a Review
+          </DialogTitle>
+        </DialogHeader>
+
+        <div className="space-y-4 pt-2">
+          <div className="flex gap-1">
+            {[1, 2, 3, 4, 5].map((star) => (
+              <Star
+                key={star}
+                size={24}
+                className={`cursor-pointer transition-colors ${
+                  star <= (hovered || rating)
+                    ? "fill-black text-black"
+                    : "fill-none text-black/20"
+                }`}
+                onMouseEnter={() => setHovered(star)}
+                onMouseLeave={() => setHovered(0)}
+                onClick={() => setRating(star)}
+              />
+            ))}
+          </div>
+
+          <input
+            type="text"
+            placeholder="Your name"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            className="w-full border border-black/20 px-3 py-2 text-sm focus:outline-none focus:border-black"
           />
-        ))}
-      </div>
 
-      <input
-        type="text"
-        placeholder="Your name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        className="w-full border border-black/20 px-3 py-2 text-sm focus:outline-none focus:border-black"
-      />
+          <textarea
+            placeholder="Share your thoughts (optional)"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            rows={4}
+            className="w-full border border-black/20 px-3 py-2 text-sm resize-none focus:outline-none focus:border-black"
+          />
 
-      <textarea
-        placeholder="Share your thoughts (optional)"
-        value={comment}
-        onChange={(e) => setComment(e.target.value)}
-        rows={3}
-        className="w-full border border-black/20 px-3 py-2 text-sm resize-none focus:outline-none focus:border-black"
-      />
+          {error && <p className="text-xs text-red-500">{error}</p>}
 
-      {error && <p className="text-xs text-red-500">{error}</p>}
-
-      <Button
-        onClick={handleSubmit}
-        disabled={submitting}
-        className="bg-black text-white hover:bg-black/80 text-sm"
-      >
-        {submitting ? "Submitting…" : "Submit Review"}
-      </Button>
-    </div>
+          <Button
+            onClick={handleSubmit}
+            disabled={submitting}
+            className="w-full bg-black text-white hover:bg-black/80"
+          >
+            {submitting ? "Submitting…" : "Submit Review"}
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 };
 
@@ -129,12 +157,40 @@ const ProductDetail = ({ product }: { product: ProductDetailData }) => {
   const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(false);
   const [reviews, setReviews] = useState<ApiReview[]>([]);
+  const [relatedProducts, setRelatedProducts] = useState<Product[]>([]);
   const { addToCart } = useCart();
+
   useEffect(() => {
     fetchReviewsByProduct(product.id)
       .then(setReviews)
       .catch(() => {});
   }, [product.id]);
+
+  useEffect(() => {
+    fetchProducts()
+      .then((all) => {
+        const filtered = all
+          .filter((p) => p.product_id !== product.id)
+          .sort((a, b) =>
+            a.category.toLowerCase() === product.category.toLowerCase()
+              ? -1
+              : b.category.toLowerCase() === product.category.toLowerCase()
+                ? 1
+                : 0,
+          )
+          .slice(0, 4)
+          .map((p) => ({
+            id: p.product_id,
+            title: p.category,
+            subtitle: p.brand_name,
+            price: parseFloat(p.price),
+            image: getProductImageUrl(p),
+            hoverImage: getModelImageUrl(p),
+          }));
+        setRelatedProducts(filtered);
+      })
+      .catch(() => {});
+  }, [product.id, product.category]);
 
   const handleAddToCart = async () => {
     setAdding(true);
@@ -176,30 +232,37 @@ const ProductDetail = ({ product }: { product: ProductDetailData }) => {
           ))}
         </div>
 
-        {/* Info panel */}
         <div className="flex flex-col h-fit sticky top-0">
           <nav className="flex gap-3 text-sm mb-8">
             <Link className="text-black/50 hover:text-black" href="/">
               Home
             </Link>
-            <span>/</span>
+            <span>&gt;</span>
             <Link
               className="text-black/50 hover:text-black capitalize"
               href={`/category/${product.category.toLowerCase()}`}
             >
               {product.category}
             </Link>
-            <span>/</span>
+            <span>&gt;</span>
             <span className="capitalize">{product.subtitle}</span>
           </nav>
 
-          <p className="text-sm text-black/50 tracking-widest capitalize">
-            {product.title}
-          </p>
-
-          <h1 className="text-3xl lg:text-4xl font-light mt-1 mb-2 capitalize">
-            {product.subtitle}
-          </h1>
+          <div className="flex justify-between mb-10">
+            <div>
+              <p className="text-sm text-black/50 tracking-widest capitalize">
+                {product.title}
+              </p>
+              <h1 className="text-3xl lg:text-4xl font-light mt-1 mb-2 capitalize">
+                {product.subtitle}
+              </h1>
+            </div>
+            <div>
+              <p className="text-xl font-medium mb-8">
+                €{product.price.toLocaleString()}
+              </p>
+            </div>
+          </div>
 
           {avgRating !== null && (
             <div className="flex items-center gap-2 mb-4">
@@ -210,10 +273,6 @@ const ProductDetail = ({ product }: { product: ProductDetailData }) => {
               </span>
             </div>
           )}
-
-          <p className="text-xl font-medium mb-8">
-            €{product.price.toLocaleString()}
-          </p>
 
           <div className="mb-4 text-sm">
             <p>Material</p>
@@ -229,10 +288,12 @@ const ProductDetail = ({ product }: { product: ProductDetailData }) => {
           </div>
           <div className="mb-8 text-sm">
             <p>Editor&apos;s notes</p>
-            <p className="text-black/60">{product.editor_note}</p>
+            <p className="text-black/60 italic">
+              &quot;{product.editor_note}&quot;
+            </p>
           </div>
 
-          <Separator className="my-5" />
+          <Separator className="mb-5" />
 
           <div className="flex items-center my-5 gap-2">
             <p>Quantity</p>
@@ -258,7 +319,7 @@ const ProductDetail = ({ product }: { product: ProductDetailData }) => {
             onClick={handleAddToCart}
             disabled={adding}
           >
-            {adding ? "Adding…" : added ? "Added to Bag ✓" : "Add to Bag"}
+            {adding ? "Adding..." : added ? "Added to Bag ✓" : "Add to Bag"}
           </Button>
 
           <Accordion type="multiple" className="w-full">
@@ -272,10 +333,12 @@ const ProductDetail = ({ product }: { product: ProductDetailData }) => {
             <AccordionItem value="details">
               <AccordionTrigger>Product Details</AccordionTrigger>
               <AccordionContent className="text-sm text-black/70 space-y-2">
-                <p>SKU: {product.product_detail.SKU}</p>
-                <p>Collection: {product.product_detail.Collection}</p>
-                <p>Closure: {product.product_detail.Closure}</p>
-                <p>Hypoallergenic: {product.product_detail.Hypoallergenic}</p>
+                {Object.entries(product.product_detail).map(([key, value]) => (
+                  <div key={key} className="flex justify-between">
+                    <span className="font-medium">{key}:</span>
+                    <span className="text-black">{value}</span>
+                  </div>
+                ))}
               </AccordionContent>
             </AccordionItem>
 
@@ -330,7 +393,7 @@ const ProductDetail = ({ product }: { product: ProductDetailData }) => {
                   </div>
                 )}
 
-                <ReviewForm
+                <ReviewDialog
                   productId={product.id}
                   onSubmitted={(r) => setReviews((prev) => [r, ...prev])}
                 />
@@ -339,6 +402,16 @@ const ProductDetail = ({ product }: { product: ProductDetailData }) => {
           </Accordion>
         </div>
       </div>
+      {relatedProducts.length > 0 && (
+        <div className="mt-20 border-t pt-10">
+          <h2 className="text-2xl font-light mb-8">You May Also Like</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {relatedProducts.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        </div>
+      )}
     </section>
   );
 };

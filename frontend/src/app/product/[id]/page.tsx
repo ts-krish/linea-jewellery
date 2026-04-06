@@ -18,7 +18,7 @@ const ProductPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         category: apiProduct.category,
         material: apiProduct.material,
         dimensions: `${apiProduct.length}cm x ${apiProduct.height}cm`,
-        weight: `${apiProduct.weight}g`,
+        weight: `${apiProduct.weight}g per ${apiProduct.category}`,
         editor_note: apiProduct.editor_note,
         description: apiProduct.description,
         images: apiProduct.images.map((img) => img.image_url),

@@ -75,8 +75,6 @@ const Category = ({ slug, products }: CategoryProps) => {
 
   const getFilteredProducts = () => {
     return products.filter((product) => {
-      // category filtering is already done server-side via fetchProductsByCategory
-      // only apply client-side price filter here
       if (filters.price.length) {
         const match = filters.price.some((range) => {
           if (range === "Under €1,000") return product.price < 1000;
