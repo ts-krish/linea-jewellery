@@ -5,12 +5,12 @@ import { FormField } from "../../components/form";
 const ShippingAddressForm = () => {
   return (
     <div className="space-y-5">
-      <FormField name="address" label="Address" placeholder="Street Address" />
+      <FormField name="address" label="Address *" placeholder="Street Address" />
       <div className="grid grid-cols-2 gap-5">
-        <FormField name="city" label="City" placeholder="City" />
+        <FormField name="city" label="City *" placeholder="City" />
         <FormField
           name="postal_code"
-          label="Postal Code"
+          label="Postal Code *"
           placeholder="Postal code"
         />
       </div>

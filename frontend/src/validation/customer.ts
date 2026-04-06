@@ -12,8 +12,6 @@ export const customerDetailsSchema = Yup.object({
     .default(""),
 
   lastName: Yup.string()
-    .min(2, "Too short")
-    .required("Last name is required")
     .default(""),
 
   phone: Yup.string()

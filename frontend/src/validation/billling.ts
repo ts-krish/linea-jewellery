@@ -17,14 +17,7 @@ export const billingAddressSchema = Yup.object({
       then: (s) => s.required("First name is required"),
     }),
 
-  billingLastName: Yup.string()
-    .min(2, "Too short")
-    .default("")
-    .when("$showBillingAddress", {
-      is: true,
-      then: (s) => s.required("Last name is required"),
-    }),
-
+  billingLastName: Yup.string().default(""),
   billingPhone: Yup.string()
     .default("")
     .when("$showBillingAddress", {

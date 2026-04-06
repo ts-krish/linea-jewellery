@@ -7,21 +7,21 @@ const CustomerDetailsForm = () => {
     <div className="space-y-5">
       <FormField
         name="email"
-        label="Email Address"
+        label="Email Address *"
         type="email"
         placeholder="Enter your email"
       />
       <div className="grid grid-cols-2 gap-5">
         <FormField
           name="firstName"
-          label="First Name"
+          label="First Name *"
           placeholder="First name"
         />
         <FormField name="lastName" label="Last Name" placeholder="Last name" />
       </div>
       <FormField
         name="phone"
-        label="Phone Number"
+        label="Phone Number *"
         placeholder="Enter your phone number"
         type="tel"
       />

@@ -8,14 +8,14 @@ const BillingAddressForm = () => {
       <h1 className="text-lg">Billing Details</h1>
       <FormField
         name="billingEmail"
-        label="Email Address"
+        label="Email Address *"
         type="email"
         placeholder="Enter billing email"
       />
       <div className="grid grid-cols-2 gap-5">
         <FormField
           name="billingFirstName"
-          label="First Name"
+          label="First Name *"
           placeholder="First name"
         />
         <FormField
@@ -26,21 +26,21 @@ const BillingAddressForm = () => {
       </div>
       <FormField
         name="billingPhone"
-        label="Phone Number"
+        label="Phone Number *"
         type="tel"
         placeholder="Phone Number"
       />
 
-      <FormField name="billingAddress" label="Address" placeholder="Address" />
+      <FormField name="billingAddress" label="Address *" placeholder="Address" />
       <div className="grid grid-cols-2 gap-5">
-        <FormField name="billingCity" label="City" placeholder="City" />
+        <FormField name="billingCity" label="City *" placeholder="City" />
         <FormField
           name="billingPostalCode"
-          label="Postal Code"
+          label="Postal Code *"
           placeholder="Postal Code"
         />
       </div>
-      <FormField name="billingCountry" label="Country" placeholder="Country" />
+      <FormField name="billingCountry" label="Country *" placeholder="Country" />
     </div>
   );
 };
