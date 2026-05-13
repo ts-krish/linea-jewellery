@@ -16,7 +16,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: [process.env.FRONTEND_URL!, "http://localhost:3000"],
     credentials: true,
   }),
 );
@@ -31,6 +31,8 @@ app.use("/api", CartItemRouter);
 app.use("/api", ProductImageRouter);
 app.use("/api", ReviewRouter);
 
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`Server running at http://localhost:${PORT}`);
+// });
+
+export default app;
